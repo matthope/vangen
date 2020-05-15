@@ -57,6 +57,15 @@ Source: <a href="{{.Repository.URL}}">{{.Repository.URL}}</a><br/>
 		}
 	}
 
+	if strings.HasPrefix(r.URL, "https://bitbucket.org") {
+		r.Type = "git"
+		r.SourceURLs = sourceURLs{
+			Home: r.URL,
+			Dir:  r.URL + "/src/master{/dir}",
+			File: r.URL + "/src/master{/dir}/{file}#lines-{line}",
+		}
+	}
+
 	if r.SourceURLs.Home == "" {
 		r.SourceURLs.Home = "_"
 	}
